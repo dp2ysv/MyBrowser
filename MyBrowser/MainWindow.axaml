@@ -1,9 +1,65 @@
+<!-- Defeinisce la finestra e i controlli dentro-->
+
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="MyBrowser.MainWindow"
+        Width="1000" Height="700"
         Title="MyBrowser">
-    Welcome to Avalonia!
+	<!-- x:Class collega XAML e C# , questa UI appartiene alla classe MyBrowser.MainWindow-->
+
+
+	<!--
+		DockPanel permette di ancorare elementi ai bordi
+		(Top/Bottom/Left/Right) e lascia il resto dello spazio al contenuto centrale
+	-->
+	<DockPanel>
+
+		<!-- Barra superiore con input URL e bottone -->
+		<Border DockPanel.Dock="Top" Padding="8">
+			<Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" ColumnSpacing="8">
+				<!--
+					TextBox per l’URL.Quando premo un tasto nella UrlBox → chiama OnUrlKeyDown
+					KeyDown intercetta l’Invio per avviare la navigazione senza usare il mouse
+				-->
+				<TextBox x:Name="UrlBox"
+						 Grid.Column="0"
+						 Watermark="https://example.com"
+						 KeyDown="OnUrlKeyDown" />
+
+				<!--
+					Pulsante di navigazione
+					Click avvia la richiesta HTTP
+				-->
+				<Button x:Name="GoButton"
+						Grid.Column="1"
+						Content="Go"
+						Click="OnGoClicked" />
+			</Grid>
+		</Border>
+
+		<!-- Barra di stato sotto top bar -->
+		<Border DockPanel.Dock="Top" Padding="8,0,8,8">
+			<!--
+				TextBlock di stato 
+			-->
+			<TextBlock x:Name="StatusText"
+					   Opacity="0.8"
+					   Text="Pronto." />
+		</Border>
+
+		<!-- Area centrale contenuto scaricato -->
+		<Border Padding="8">
+			<ScrollViewer>
+				<!--
+					TextBlock dove viene mostrato l’HTML
+					Font monospazio per leggibilità del markup
+				-->
+				<TextBlock x:Name="ContentArea"
+						   FontFamily="Consolas"
+						   TextWrapping="Wrap"/>
+			</ScrollViewer>
+		</Border>
+
+	</DockPanel>
 </Window>
+
